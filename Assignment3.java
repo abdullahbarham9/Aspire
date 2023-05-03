@@ -10,18 +10,33 @@ public class Assignment3 {
     }
 
     private static int maxValue(int[] numbers) {
+        if (numbers == null || numbers.length == 0){
+            System.out.println("empty");
+            return 0;
+
+        }
         int max = numbers[0];
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] > max) {
+        for (int i = 1; i < numbers.length; i++) {
+
+           if (numbers[i] > max) {
                 max = numbers[i];
             }
+
         }
+
         return max;
     }
 
     private static int minValue(int[] numbers) {
+        if (numbers == null || numbers.length == 0){
+            System.out.println("empty2");
+            return 0;
+
+        }
         int min = numbers[0];
-        for (int i = 0; i < numbers.length; i++) {
+        for (int i = 1; i < numbers.length; i++) {
+
+
             if (numbers[i] < min) {
                 min = numbers[i];
             }
@@ -31,7 +46,7 @@ public class Assignment3 {
 
 
     private static double averageValue(int[] numbers) {
-        int sum = 0;
+        double sum = 0;
         for (int i = 0; i < numbers.length; i++) {
             sum += numbers[i];
         }
