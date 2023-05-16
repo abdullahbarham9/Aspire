@@ -1,31 +1,79 @@
+import java.util.LinkedList;
+
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
+    }
+}
 
 
-import java.util.HashMap;
-
-public class MyHashMap<K, V> {
-    private HashMap<K,V> map;
+class MyHashMap<K, V> {
+    private LinkedList<Pair<K, V>>[] pairs;
+    private int capacity;
 
     public MyHashMap() {
-        map = new HashMap<>();
+        capacity = 16;
+        pairs = new LinkedList[capacity];
+
+        for (int i = 0; i < capacity; i++) {
+            pairs[i] = new LinkedList<>();
+        }
+    }
+
+    private int hash(K key) {
+        return Math.abs(key.hashCode() % capacity);
     }
 
     public void put(K key, V value) {
-        map.put(key, value);
+        int pairIndex = hash(key);
+        LinkedList<Pair<K, V>> pairsList = pairs[pairIndex];
+
+        for (Pair<K, V> pair : pairsList) {
+            if (pair.getKey().equals(key)) {
+                pair.setValue(value);
+                return;
+            }
+        }
+        pairsList.add(new Pair<>(key, value));
     }
+
     public V get(K key) {
-        return map.get(key);
+        int pairIndex = hash(key);
+        LinkedList<Pair<K, V>> pairsList = pairs[pairIndex];
+
+        for (Pair<K, V> pair : pairsList) {
+            if (pair.getKey().equals(key)) {
+                return pair.getValue();
+            }
+        }
+        return null;
     }
+
 
     public static void main(String[] args) {
-        MyHashMap<Integer, String> myMap = new MyHashMap<>();
-        myMap.put(1,"one");
-        myMap.put(2,"two");
-        myMap.put(3,"three");
-        myMap.put(4,"four");
+        MyHashMap<Integer,String> map = new MyHashMap();
+        map.put(3,"three");
+        map.put(1,"one");
+        map.put(2,"two");
 
-
-        System.out.println(myMap.get(3));
-        System.out.println(myMap.get(1));
-
+        System.out.println(map.get(3));
+        System.out.println(map.get(1));
+        System.out.println(map.get(2));
     }
 }
