@@ -88,7 +88,12 @@ public class MyLinkedListApplication {
         nameWithIds.forEach(System.out::println);
 
 
-//        Tuple<MyLinkedList<Integer>, MyLinkedList<String>> tupleIdAndNames = MyLinkedList.unZip(nameWithIds);
+        Tuple<MyLinkedList<Integer>,MyLinkedList<String>> unzipedLists =nameWithIds.unZip(nameWithIds);
+
+        System.out.println("************* unzipped List *************");
+        unzipedLists._1.forEach(System.out::println);
+        unzipedLists._2.forEach(System.out::println);
+
     }
 
     public static IntStream range(int from, int toIncluded){
