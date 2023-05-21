@@ -90,8 +90,9 @@ public class MyLinkedListApplication {
 
         Tuple<MyLinkedList<Integer>,MyLinkedList<String>> unzipedLists =nameWithIds.unZip(nameWithIds);
 
-        unzipedLists._1.forEach(System.out::print);
-        unzipedLists._2.forEach(System.out::print);
+        System.out.println("************* unzipped List *************");
+        unzipedLists._1.forEach(System.out::println);
+        unzipedLists._2.forEach(System.out::println);
 
     }
 

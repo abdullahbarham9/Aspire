@@ -171,20 +171,18 @@ public class MyLinkedList<E> {
         return zip(new MyLinkedList<Tuple<E,U>>(),eFirst,uFirst);
     }
 
-    public  <T,U> Tuple<MyLinkedList<T>,MyLinkedList<U>> unZip(MyLinkedList<Tuple<T,U>> zippedList){
+    public  <T,U> Tuple<MyLinkedList<T>,MyLinkedList<U>> unZip(MyLinkedList<Tuple<T,U>> zippedList) {
+        Tuple<MyLinkedList<T>, MyLinkedList<U>> initialResult = new Tuple<>(new MyLinkedList<>(), new MyLinkedList<>());
 
-        MyLinkedList<T> list1 = new MyLinkedList<>();
-        MyLinkedList<U> list2 = new MyLinkedList<>();
-        Node head = (Node) zippedList.first;
+        return zippedList.reduceL(initialResult,acc->e->{
+            acc._1.add(e._1);
+            acc._2.add(e._2);
+            return acc;
+        });
 
-        while (head != null) {
-            Tuple<T,U> tuple = (Tuple<T, U>) head.data;
-            list1.add(tuple._1);
-            list2.add(tuple._2);
-            head=head.next;
-        }
-        return new Tuple<>(list1,list2);
     }
+
+
 
     private <U> MyLinkedList<Tuple<E, U>> zip(MyLinkedList<Tuple<E, U>> acc, Node eNode, Node uNode) {
         return eNode==null || uNode == null
