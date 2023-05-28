@@ -1,6 +1,7 @@
 package Assignment8;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class Application {
     static Students[] students = new Students[]{
@@ -13,18 +14,23 @@ public class Application {
 
     };
 
-    public static void main(String[] args)  {
-//       System.out.println(getStudentById1(7));
+    public static void main(String[] args) {
+       System.out.println(getStudentById1(5));
 //
-//        System.out.println(getStudentById2(2));
-//        System.out.println(getStudentById3(2));
+        try {
+            System.out.println(getStudentById2(2));
+        } catch (StudentNotFoundException e) {
+            System.out.println("error: can't find student by id");
+        }
+
+        System.out.println(getStudentById3(5));
     }
 
     // method 1
-    public static Students[] getStudentById1(int id) {
+    public static Students getStudentById1(int id) {
         for (Students student1 : students) {
             if (student1.getId() == id) {
-                return students;
+                return student1;
             }
         }
 
@@ -32,15 +38,16 @@ public class Application {
     }
 
 
-
     // method 2
 
-    public static Students[] getStudentById2(int id) throws StudentNotFoundException {
+    public static Students getStudentById2(int id) throws StudentNotFoundException {
 
-        if (students == null) {
-            throw new StudentNotFoundException("Student not found for ID: " + id);
+        for (Students student2 : students) {
+            if (student2.getId() == id) {
+                return student2;
+            }
         }
-        return students;
+        throw new StudentNotFoundException("Student not found for ID: " + id);
     }
 
     private static class StudentNotFoundException extends Exception {
@@ -51,12 +58,17 @@ public class Application {
 
 
     //method 3
+
     public static Optional<Students> getStudentById3(int id) {
-        for (Students students3 : students) {
-            if (students3.getId() == id) {
-                return Optional.of(students3);
-            }
-        }
-        return Optional.empty();
+
+        return Stream.of(students).
+                filter(s -> s.getId() == id).findFirst();
+
     }
+
+
+
 }
+
+
+
